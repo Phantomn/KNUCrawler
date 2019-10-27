@@ -17,7 +17,7 @@ DEFAULT_ITEM_CLASS = 'knu.items.KnuItem'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'knu (+http://www.yourdomain.com)'
+USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -40,10 +40,11 @@ ROBOTSTXT_OBEY = False
 #TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
-#}
+DEFAULT_REQUEST_HEADERS = {
+   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+   'Accept-Language': 'ko-KR,ko;q=0.9,en-GB;q=0.8,en;q=0.7,zh-CN;q=0.6,zh;q=0.5,en-US;q=0.4',
+   'cookie': '_ga=GA1.3.21886923.1568612687; ipmsperf_uuid=-6987720727020700880; __utma=175542584.1276819145.1571907159.1571907159.1571907159.1; __utmc=175542584; __utmz=175542584.1571907159.1.1.utmccn=(direct)|utmcsr=(direct)|utmcmd=(none); _gid=GA1.3.2069811332.1572017465; JSESSIONID=PnZhcGUOOPe3F1esYROCpy8hETeA1WcaILp2o7DaogOcbS2IydU5BgixXCKh1X4Y.web2_servlet_www; _gat_gtag_UA_150735157_1=1'
+}
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html

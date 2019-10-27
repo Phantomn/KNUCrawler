@@ -1,4 +1,4 @@
-#!/home/phantom/venv/bin/python
+#!/home/phantom/KNUCrawler/venv/bin/python
 
 import sys
 import getopt

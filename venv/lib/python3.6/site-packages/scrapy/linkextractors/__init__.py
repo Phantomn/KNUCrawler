@@ -28,7 +28,7 @@ IGNORED_EXTENSIONS = [
 
     # video
     '3gp', 'asf', 'asx', 'avi', 'mov', 'mp4', 'mpg', 'qt', 'rm', 'swf', 'wmv',
-    'm4a', 'm4v',
+    'm4a', 'm4v', 'flv',
 
     # office suites
     'xls', 'xlsx', 'ppt', 'pptx', 'pps', 'doc', 'docx', 'odt', 'ods', 'odg',
@@ -41,7 +41,8 @@ IGNORED_EXTENSIONS = [
 
 _re_type = type(re.compile("", 0))
 _matches = lambda url, regexs: any(r.search(url) for r in regexs)
-_is_valid_url = lambda url: url.split('://', 1)[0] in {'http', 'https', 'file'}
+_is_valid_url = lambda url: url.split('://', 1)[0] in {'http', 'https', \
+                                                       'file', 'ftp'}
 
 
 class FilteringLinkExtractor(object):
@@ -49,7 +50,7 @@ class FilteringLinkExtractor(object):
     _csstranslator = HTMLTranslator()
 
     def __init__(self, link_extractor, allow, deny, allow_domains, deny_domains,
-                 restrict_xpaths, canonicalize, deny_extensions, restrict_css):
+                 restrict_xpaths, canonicalize, deny_extensions, restrict_css, restrict_text):
 
         self.link_extractor = link_extractor
 
@@ -69,6 +70,8 @@ class FilteringLinkExtractor(object):
         if deny_extensions is None:
             deny_extensions = IGNORED_EXTENSIONS
         self.deny_extensions = {'.' + e for e in arg_to_iter(deny_extensions)}
+        self.restrict_text = [x if isinstance(x, _re_type) else re.compile(x)
+                              for x in arg_to_iter(restrict_text)]
 
     def _link_allowed(self, link):
         if not _is_valid_url(link.url):
@@ -83,6 +86,8 @@ class FilteringLinkExtractor(object):
         if self.deny_domains and url_is_from_any_domain(parsed_url, self.deny_domains):
             return False
         if self.deny_extensions and url_has_any_extension(parsed_url, self.deny_extensions):
+            return False
+        if self.restrict_text and not _matches(link.text, self.restrict_text):
             return False
         return True
 

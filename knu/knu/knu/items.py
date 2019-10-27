@@ -10,6 +10,6 @@ from scrapy import Item, Field
 
 
 class KnuItem(scrapy.Item):
-		title = scrapy.Field()
-		link = scrapy.Field()
-		date = scrapy.Field()
+	title = scrapy.Field()
+	link = scrapy.Field()
+	date = scrapy.Field()
