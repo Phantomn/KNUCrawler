@@ -67,7 +67,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'knu.pipelines.KnuPipeline': 1,
+    'knu.pipelines.MySQLPipeline': 1,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -90,3 +90,13 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+MYSQL_HOST = 'localhost'
+MYSQL_PORT = 3306
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = '1'
+MYSQL_DB = 'crawler'
+MYSQL_TABLE = 'data'
+MYSQL_UPSERT = False
+MYSQL_RETRIES = 3
+MYSQL_CLOSE_ON_ERROR = True
+MYSQL_CHARSET = 'utf8'
