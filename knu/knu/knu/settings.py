@@ -67,7 +67,8 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'knu.pipelines.MySQLPipeline': 1,
+    'knu.pipelines.JSONPipeline': 10,
+    'knu.pipelines.MySQLPipeline': 20,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

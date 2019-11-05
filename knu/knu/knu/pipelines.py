@@ -37,6 +37,8 @@ from twisted.enterprise import adbapi
 logger = logging.getLogger(__name__)
 logger.setLevel('DEBUG')
 
+import codecs
+import json
 
 class MySQLPipeline(object):  #
     """
@@ -157,3 +159,13 @@ class MySQLPipeline(object):  #
             logger.error("SQL: %s", sql)
             raise
         self.stats.inc_value('{}/saved'.format(self.stats_name))
+
+
+class JSONPipeline(object):
+		def __init__(self):
+				self.file = codecs.open("data.json", "wb", encoding="utf-8")
+
+		def process_item(self, item, spider):
+				line = json.dumps(dict(item), ensure_ascii=False) + "\n"
+				self.file.write(line)
+				return item
