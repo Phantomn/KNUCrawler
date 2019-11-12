@@ -1,31 +1,7 @@
-"""
-MIT License
-
-scrapy_mysql_pipeline: Asynchronous mysql Scrapy item pipeline
-
-Copyright (c) 2017 Iaroslav Russkykh
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-"""
-
 import logging
 import pprint
+import os
+import subprocess
 
 from pymysql.cursors import DictCursor
 
@@ -40,7 +16,7 @@ logger.setLevel('DEBUG')
 import codecs
 import json
 
-class MySQLPipeline(object):  #
+class MySQLPipeline(object): #
     """
     Defaults:
     MYSQL_HOST = 'localhost'
@@ -55,7 +31,7 @@ class MySQLPipeline(object):  #
     MYSQL_CHARSET = 'utf8'
     Pipeline:
     ITEM_PIPELINES = {
-       'scrapy_mysql_pipeline.MySQLPipeline': 300,
+        'scrapy_mysql_pipeline.MySQLPipeline': 300,
     }
     """
     stats_name = 'mysql_pipeline'
@@ -88,14 +64,9 @@ class MySQLPipeline(object):  #
 
     @staticmethod
     def preprocess_item(item):
-        """Can be useful with extremly straight-line spiders design without item loaders or items at all
-        CAVEAT: On my opinion if you want to write something here - you must read
-        http://scrapy.readthedocs.io/en/latest/topics/loaders.html before
-        """
         return item
 
     def postprocess_item(self, *args):
-        """Can be useful if you need to update query tables depends of mysql query result"""
         pass
 
     @defer.inlineCallbacks
@@ -108,9 +79,9 @@ class MySQLPipeline(object):  #
                 yield self.db.runInteraction(self._process_item, item)
             except OperationalError as e:
                 if e.args[0] in (
-                        CR_SERVER_GONE_ERROR,
-                        CR_SERVER_LOST,
-                        CR_CONNECTION_ERROR,
+                    CR_SERVER_GONE_ERROR,
+                    CR_SERVER_LOST,
+                    CR_CONNECTION_ERROR,
                 ):
                     retries -= 1
                     logger.info('%s %s attempts to reconnect left', e, retries)
@@ -151,6 +122,8 @@ class MySQLPipeline(object):  #
                 values(data)
             )
 
+
+
     def _process_item(self, tx, row):
         sql, data = self._generate_sql(row)
         try:
@@ -160,12 +133,11 @@ class MySQLPipeline(object):  #
             raise
         self.stats.inc_value('{}/saved'.format(self.stats_name))
 
-
 class JSONPipeline(object):
-		def __init__(self):
-				self.file = codecs.open("data.json", "wb", encoding="utf-8")
+    def __init__(self):
+        self.file = codecs.open("data.json", "wb", encoding="utf-8")
 
-		def process_item(self, item, spider):
-				line = json.dumps(dict(item), ensure_ascii=False) + "\n"
-				self.file.write(line)
-				return item
+    def process_item(self, item, spider):
+        line = json.dumps(dict(item), ensure_ascii=False) + "\n"
+        self.file.write(line)
+        return item

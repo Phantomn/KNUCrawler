@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import sys
+import os
 from knu.items import KnuItem
 
 class KnuSpider(scrapy.Spider):
