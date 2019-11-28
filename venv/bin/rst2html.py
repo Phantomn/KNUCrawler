@@ -1,4 +1,4 @@
-#!/home/phantom/KNUCrawler/venv/bin/python3.6
+#!/home/phantom/KNUCrawler/venv/bin/python3.5
 
 # $Id: rst2html.py 4564 2006-05-21 20:44:42Z wiemann $
 # Author: David Goodger <goodger@python.org>

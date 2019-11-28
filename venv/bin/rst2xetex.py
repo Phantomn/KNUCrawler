@@ -1,4 +1,4 @@
-#!/home/phantom/KNUCrawler/venv/bin/python3.6
+#!/home/phantom/KNUCrawler/venv/bin/python3.5
 
 # $Id: rst2xetex.py 7847 2015-03-17 17:30:47Z milde $
 # Author: Guenter Milde

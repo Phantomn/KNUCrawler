@@ -1,4 +1,4 @@
-#!/home/phantom/KNUCrawler/venv/bin/python3.6
+#!/home/phantom/KNUCrawler/venv/bin/python3.5
 
 # $Id: rst2s5.py 4564 2006-05-21 20:44:42Z wiemann $
 # Author: Chris Liechti <cliechti@gmx.net>
